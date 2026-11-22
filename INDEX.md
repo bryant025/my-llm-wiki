@@ -62,6 +62,9 @@
 ---
 
 ## 📊 教學簡報與講義庫 (`slides/`)
-*由簡報 Agent 從 Wiki 知識庫提取生成的教學投影片大綱。*
+*由簡報生成工作流依「痛點引入 → 核心概念 → 運作原理 → 實際案例 → 總結」五段式架構提煉生成之可互動投影片。*
 
-*(目前尚無條目)*
+- [現代食品科學與食安真相：從前沿加工、成分解密到餐桌安全 (HTML 簡報)](slides/deck.html)
+  - 檢索引用清單：[slides/sources.md](slides/sources.md)（嚴格覆蓋 8 週原始講義核心概念）
+  - 完整教學大綱：[slides/outline.md](slides/outline.md)
+  - 逐頁文稿與講稿：[slides/drafts/](slides/drafts/)（共 12 頁，含講者口播講稿與 Wiki 出處註記）
