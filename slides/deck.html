@@ -1,0 +1,734 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>現代食品科學與食安真相 | 教學簡報</title>
+    <style>
+        :root {
+            --bg-dark: #0f172a;
+            --slide-bg: #1e293b;
+            --slide-border: #334155;
+            --primary: #38bdf8;
+            --primary-accent: #0ea5e9;
+            --text-main: #f8fafc;
+            --text-muted: #94a3b8;
+            --callout-tip-bg: rgba(56, 189, 248, 0.12);
+            --callout-tip-border: #38bdf8;
+            --callout-warn-bg: rgba(245, 158, 11, 0.12);
+            --callout-warn-border: #f59e0b;
+            --accent-green: #10b981;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans TC", sans-serif;
+            background-color: var(--bg-dark);
+            color: var(--text-main);
+            overflow: hidden;
+            height: 100vh;
+            width: 100vw;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+
+        /* Presentation Container 16:9 Aspect Ratio */
+        #presentation-viewport {
+            position: relative;
+            width: 92vw;
+            max-width: 1280px;
+            height: calc(92vw * 9 / 16);
+            max-height: 720px;
+            background: var(--slide-bg);
+            border: 1px solid var(--slide-border);
+            border-radius: 16px;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.6);
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .slide {
+            display: none;
+            flex-direction: column;
+            height: 100%;
+            width: 100%;
+            padding: 36px 48px;
+            overflow-y: auto;
+            position: relative;
+            animation: fadeIn 0.3s ease-out;
+        }
+
+        .slide.active {
+            display: flex;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(6px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Header Bar */
+        .slide-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 14px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+            padding-bottom: 8px;
+        }
+
+        .slide-badge {
+            background: rgba(56, 189, 248, 0.15);
+            color: var(--primary);
+            font-weight: 700;
+            font-size: 0.85rem;
+            padding: 3px 10px;
+            border-radius: 20px;
+            letter-spacing: 0.5px;
+        }
+
+        .slide-source-tag {
+            font-size: 0.78rem;
+            color: var(--text-muted);
+        }
+
+        .slide-source-tag code {
+            background: rgba(0,0,0,0.3);
+            padding: 2px 6px;
+            border-radius: 4px;
+            color: #cbd5e1;
+            font-family: ui-monospace, Menlo, Monaco, Consolas, monospace;
+        }
+
+        /* Titles */
+        .slide-title-group {
+            margin-bottom: 18px;
+        }
+
+        .slide-title {
+            font-size: 1.75rem;
+            font-weight: 800;
+            line-height: 1.25;
+            color: #ffffff;
+            letter-spacing: -0.5px;
+        }
+
+        .slide-subtitle {
+            font-size: 1rem;
+            color: var(--primary);
+            margin-top: 4px;
+            font-weight: 500;
+        }
+
+        /* Body & Content */
+        .slide-body {
+            flex: 1;
+            font-size: 1.02rem;
+            line-height: 1.65;
+            color: #e2e8f0;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .slide-section-title {
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: #38bdf8;
+            margin-top: 10px;
+            margin-bottom: 4px;
+            border-left: 3px solid #38bdf8;
+            padding-left: 10px;
+        }
+
+        .slide-list {
+            margin-left: 24px;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .slide-list li {
+            line-height: 1.5;
+        }
+
+        .slide-list li strong {
+            color: #ffffff;
+        }
+
+        /* Callouts */
+        .callout {
+            padding: 12px 18px;
+            border-radius: 8px;
+            font-size: 0.95rem;
+            margin: 6px 0;
+            line-height: 1.5;
+        }
+
+        .callout-tip {
+            background: var(--callout-tip-bg);
+            border-left: 4px solid var(--callout-tip-border);
+            color: #e0f2fe;
+        }
+
+        .callout-warn {
+            background: var(--callout-warn-bg);
+            border-left: 4px solid var(--callout-warn-border);
+            color: #fef3c7;
+        }
+
+        /* ASCII Diagram Box */
+        .ascii-box {
+            background: #090d16;
+            border: 1px solid #1e293b;
+            padding: 12px;
+            border-radius: 8px;
+            font-size: 0.82rem;
+            color: #38bdf8;
+            font-family: monospace;
+            overflow-x: auto;
+            line-height: 1.35;
+        }
+
+        /* Speaker Notes Drawer */
+        .speaker-notes-drawer {
+            margin-top: 14px;
+            background: rgba(15, 23, 42, 0.85);
+            border: 1px dashed rgba(56, 189, 248, 0.4);
+            border-radius: 8px;
+            padding: 10px 14px;
+            font-size: 0.88rem;
+            color: #cbd5e1;
+            line-height: 1.45;
+        }
+
+        .notes-header {
+            font-weight: 700;
+            color: var(--primary);
+            font-size: 0.8rem;
+            margin-bottom: 4px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        /* Control Bar */
+        #nav-controls {
+            margin-top: 16px;
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+
+        button.btn {
+            background: #1e293b;
+            color: #f8fafc;
+            border: 1px solid #475569;
+            padding: 8px 18px;
+            border-radius: 8px;
+            font-size: 0.95rem;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        button.btn:hover {
+            background: #334155;
+            border-color: #38bdf8;
+            color: #38bdf8;
+        }
+
+        #progress-counter {
+            font-size: 0.95rem;
+            color: var(--text-muted);
+            min-width: 90px;
+            text-align: center;
+        }
+
+        .kb-hint {
+            font-size: 0.8rem;
+            color: #64748b;
+        }
+    </style>
+</head>
+<body>
+
+    <main id="presentation-viewport">
+        
+        <section class="slide" id="slide-1" data-slide-index="0">
+            <div class="slide-header">
+                <span class="slide-badge">Slide 01 / 12</span>
+                <span class="slide-source-tag">Wiki 出處: <code>wiki/myths-safety/food-protection-and-safety-paradigm.md</code></span>
+            </div>
+            <div class="slide-title-group">
+                <h2 class="slide-title">餐桌上的科學真相：我們究竟吃進了什麼？</h2>
+                <p class="slide-subtitle">從前沿加工、成分解密到餐桌安全的全景解構</p>
+            </div>
+            <div class="slide-body">
+                <h3 class="slide-section-title">核心思考</h3>
+<ul class="slide-list">
+<li>當我們在超市挑選「無添加」食品，它真的 100% 安全嗎？</li>
+<li>為什麼現代食品不用高溫大火煮沸，也能在常溫放數十天？</li>
+<li>切開不變黑的蘋果、咬下去會噴汁的植物肉，背後藏著哪些前沿生物科技？</li>
+</ol>
+
+<div class="callout callout-tip">💡 <strong>這門課的使命</strong>：不只教你「怎麼吃」，更帶你深入分子與物理層面，理解廚房現象背後的「為什麼」。</div>
+
+---
+            </div>
+            <div class="speaker-notes-drawer" id="notes-1">
+                <div class="notes-header">🎤 講者口播講稿</div>
+                <div class="notes-content">各位學員好！每天三餐我們都在與食物打交道，但你是否曾停下腳步思考：包裝上的「SGS 檢驗合格」真的代表萬無一失嗎？標榜「純天然無添加」的食品，背後是否潛藏著致命的微生物風險？今天我們將用最白話的生活語言，結合最新的食品科學研究，帶大家穿透食品行銷話術，解構現代飲食的真實面貌。</div>
+            </div>
+        </section>
+        
+        <section class="slide" id="slide-2" data-slide-index="1">
+            <div class="slide-header">
+                <span class="slide-badge">Slide 02 / 12</span>
+                <span class="slide-source-tag">Wiki 出處: <code>wiki/myths-safety/food-protection-and-safety-paradigm.md</code></span>
+            </div>
+            <div class="slide-title-group">
+                <h2 class="slide-title">迷思衝擊：檢驗合格＝絕對安全？「無添加」是萬靈丹？</h2>
+                <p class="slide-subtitle">打破生活兩大食安直覺謬誤</p>
+            </div>
+            <div class="slide-body">
+                <h3 class="slide-section-title">謬誤一：檢驗報告過關，就保證絕對無毒？</h3>
+<ul class="slide-list">
+<li><strong>抽樣限制</strong>：檢驗只能抽檢極少數樣品，若污染不均（如黃麴毒素集中在少數發霉穀粒），極易漏檢。</li>
+<li><strong>未知盲點</strong>：歷史上重大的三聚氰胺、塑化劑、順丁烯二酸事件，事發前<strong>全都不在常規檢驗項目內</strong>！</li>
+<li>🔑 <strong>科學結論</strong>：食品安全不是檢驗出來的，而是<strong>源頭設計與管理出來的</strong>。</li>
+</ol>
+
+<h3 class="slide-section-title">謬誤二：100% 無添加＝一定比添加物更健康安全？</h3>
+<ul class="slide-list">
+<li><strong>自然謬誤</strong>：天然不等於無毒，人工添加物不等於毒藥。</li>
+<li><strong>致命代價</strong>：若香腸完全不添加微量<strong>亞硝酸鹽 (E250)</strong>，將無法抑制致命的<strong>肉毒桿菌 (Clostridium botulinum)</strong> 芽孢產毒，其神經毒素致死率極高！</li>
+</ol>
+
+---
+            </div>
+            <div class="speaker-notes-drawer" id="notes-2">
+                <div class="notes-header">🎤 講者口播講稿</div>
+                <div class="notes-content">很多人買菜看報告，以為「檢驗合格」就拿到了免死金牌。但食品科學界有一句名言：「食安是設計出來的，不是檢驗出來的。」因為常規檢驗只能驗「已知清單」，當年三聚氰胺爆發前根本沒人驗過！另一方面，大家盲目追逐「無添加」，殊不知香腸裡微量的亞硝酸鹽，真正任務是擋下致死率極高的肉毒桿菌毒素。盲目追求零添加，反而可能承擔更大的微生物腐敗風險。</div>
+            </div>
+        </section>
+        
+        <section class="slide" id="slide-3" data-slide-index="2">
+            <div class="slide-header">
+                <span class="slide-badge">Slide 03 / 12</span>
+                <span class="slide-source-tag">Wiki 出處: <code>wiki/myths-safety/bongkrekic-acid-and-fermented-food-safety.md</code></span>
+            </div>
+            <div class="slide-title-group">
+                <h2 class="slide-title">致命警鐘：無法被大火消滅的廚房隱形毒素</h2>
+                <p class="slide-subtitle">從 2024 寶林茶室事件看邦克列酸（Bongkrekic Acid）</p>
+            </div>
+            <div class="slide-body">
+                <h3 class="slide-section-title">為什麼大火快炒也殺不死它？</h3>
+<ul class="slide-list">
+<li><strong>產毒菌株</strong>：唐菖蒲伯克氏菌椰毒病原型 (*Burkholderia gladioli* pv. *cocovenenans*)。</li>
+<li><strong>超強耐熱性</strong>：毒素在 <strong>100°C 沸水煮 1 小時、甚至 121°C 高壓加熱</strong> 依然不被破壞！</li>
+<li><strong>無味陷阱</strong>：受污染的粄條無酸味、不發臭、外觀正常，致死劑量僅需 <strong>1 至 3 毫克</strong>。</li>
+</ol>
+
+<h3 class="slide-section-title">致命分子機制：拔掉粒線體的插頭</h3>
+<ul class="slide-list">
+<li>毒素不可逆鎖定粒線體內膜上的 <strong>ANT 轉運蛋白</strong>。</li>
+<li>阻斷能量貨幣 <strong>ATP</strong> 輸出細胞質，全身體內細胞瞬間「能量窒息」，引發猛爆性肝腎衰竭。</li>
+</ol>
+
+<div class="callout callout-warn">⚠️ <strong>廚房紅線</strong>：產毒最適溫度為 22°C~30°C！濕米麵製品絕不可在室溫過夜，木耳泡發不可超過 2~4 小時。</div>
+
+---
+            </div>
+            <div class="speaker-notes-drawer" id="notes-3">
+                <div class="notes-header">🎤 講者口播講稿</div>
+                <div class="notes-content">2024 年震驚全台的寶林茶室事件，顛覆了無數人的常識：「食物煮滾不就殺菌了嗎？」然而，邦克列酸是一種極耐熱的化學毒素，就算用大火炒到鍋氣十足，毒素結構依然毫髮無傷！它能直接掐死人體細胞的發電廠——粒線體，讓肝臟和腎臟細胞全面缺能壞死。記住：面對這種毒素，大火加熱毫無用處，唯有「冷藏在 7°C 以下」徹底阻斷細菌產毒，才是唯一的生路！</div>
+            </div>
+        </section>
+        
+        <section class="slide" id="slide-4" data-slide-index="3">
+            <div class="slide-header">
+                <span class="slide-badge">Slide 04 / 12</span>
+                <span class="slide-source-tag">Wiki 出處: <code>wiki/myths-safety/food-protection-and-safety-paradigm.md</code></span>
+            </div>
+            <div class="slide-title-group">
+                <h2 class="slide-title">防護矩陣：超越消極檢驗的「食品防護」四大支柱</h2>
+                <p class="slide-subtitle">現代國際食品科學的新思維架構</p>
+            </div>
+            <div class="slide-body">
+                <h3 class="slide-section-title">現代食品防護四大支柱 (Food Protection)</h3>
+<ul class="slide-list">
+<li><strong>1. 食品品質 (Quality)</strong>：風味、外觀、營養質地與保鮮。</li>
+<li><strong>2. 食品安全 (Safety)</strong>：非蓄意微生物污染（致病菌、天然毒素）。</li>
+<li><strong>3. 食品造假 (Fraud / EMA)</strong>：經濟動機驅使的摻偽混充（如非法色素混充）。</li>
+<li><strong>4. 食品防禦 (Defense)</strong>：防範人為蓄意下毒破壞與生物危害。</li>
+</ol>
+
+<h3 class="slide-section-title">自煮者的生活降維落實：</h3>
+<ul class="slide-list">
+<li><strong>嚴守「危險溫度帶」</strong>：<strong>5°C 至 60°C</strong> 是細菌繁殖溫床！熟食 2 小時內進冰箱（低於 7°C），覆熱中心需達 <strong>75°C 以上</strong>。</li>
+<li><strong>生熟嚴格分流</strong>：生雞肉水龍頭直沖會噴濺病菌達 <strong>1 公尺</strong>！切勿同砧板處理生熟食。</li>
+</ol>
+
+---
+            </div>
+            <div class="speaker-notes-drawer" id="notes-4">
+                <div class="notes-header">🎤 講者口播講稿</div>
+                <div class="notes-content">面對複雜的食安挑戰，國際食品科學界建立了「食品防護」四大支柱：品質、安全、防造假與防禦。特別是「食品造假」，像是過去用工業染料蘇丹紅提升辣椒粉賣相，這是出於暴利的不法行為，必須從供應鏈源頭溯源解決。而在家庭中，我們只要管好兩個關鍵：第一，避開 5 到 60 度的危險溫度帶；第二，生熟砧板刀具徹底分開，生雞肉切勿直接開水龍頭沖洗，就能擋下九成以上的家庭食安危機。</div>
+            </div>
+        </section>
+        
+        <section class="slide" id="slide-5" data-slide-index="4">
+            <div class="slide-header">
+                <span class="slide-badge">Slide 05 / 12</span>
+                <span class="slide-source-tag">Wiki 出處: <code>wiki/myths-safety/clean-label-science.md</code></span>
+            </div>
+            <div class="slide-title-group">
+                <h2 class="slide-title">標示解碼：潔淨標示（Clean Label）與「少加工」革命</h2>
+                <p class="slide-subtitle">用物理技術與天然配方取代不必要的人工添加物</p>
+            </div>
+            <div class="slide-body">
+                <h3 class="slide-section-title">潔淨標示的起源：歐盟 E-編碼 (E-Numbers)</h3>
+<ul class="slide-list">
+<li>歐盟為標準化添加物命名設立 E 編碼（如 E300 維生素 C、E250 亞硝酸鈉）。</li>
+<li>消費者反推：「標籤上的 E 編碼越少，代表食物越天然與潔淨」。</li>
+</ol>
+
+<h3 class="slide-section-title">台灣「潔淨標章」兩級標準</h3>
+<ul class="slide-list">
+<li><strong>潔淨標章 (Clean Label)</strong>：剔除 <strong>8 大類人造添加物</strong>（人工香料、色素、甜味劑、防腐劑、漂白劑、保色劑、結著劑、含鋁膨脹劑）且非基改。</li>
+<li><strong>雙潔淨標章 (Double Clean)</strong>：可用添加物大幅限縮至原本的 <strong>10% 左右</strong>（僅限天然必要者）。</li>
+</ol>
+
+<h3 class="slide-section-title">食品科技的物理替代案例：</h3>
+<ul class="slide-list">
+<li><strong>無人工磷酸鹽貢丸</strong>：食品所利用重力拍打剪切力，自然溶出<strong>肌原纖維蛋白</strong>成膠，維持脆彈多汁。</li>
+<li><strong>超音波減糖零食</strong>：以色列 Torr Foodtech 運用機械壓力與超音波振動黏合堅果，完全不用黏稠糖漿。</li>
+</ol>
+
+---
+            </div>
+            <div class="speaker-notes-drawer" id="notes-5">
+                <div class="notes-header">🎤 講者口播講稿</div>
+                <div class="notes-content">大家都想要「成分簡單、少化學劑」，這股風潮催生了「潔淨標示（Clean Label）」。在台灣，潔淨標章分兩級：單潔淨剔除八大類人工添加物；雙潔淨更嚴苛，把添加物限縮到只剩一成！那麼不用添加物，食品怎麼維持口感？科學家改用「物理手法」——比如食品所研發的無磷酸鹽貢丸，透過精準拍打把豬肉自身的肌原纖維蛋白質萃取出來，靠肉本身的蛋白質網絡鎖水彈牙，成功用物理技術淘汰了化學添加物。</div>
+            </div>
+        </section>
+        
+        <section class="slide" id="slide-6" data-slide-index="5">
+            <div class="slide-header">
+                <span class="slide-badge">Slide 06 / 12</span>
+                <span class="slide-source-tag">Wiki 出處: <code>wiki/myths-safety/food-classifications-and-health-food.md</code></span>
+            </div>
+            <div class="slide-title-group">
+                <h2 class="slide-title">身分認證：保健食品不是藥！小綠人與益生菌「菌株代碼」</h2>
+                <p class="slide-subtitle">如何看懂標章與微生物專利，避免花錢當冤大頭</p>
+            </div>
+            <div class="slide-body">
+                <h3 class="slide-section-title">法定「健康食品」vs 一般「保健食品」</h3>
+<ul class="slide-list">
+<li><strong>市售保健食品</strong>：法律上<strong>只是一般食品</strong>，政府並未審查其特殊功效，嚴禁宣稱療效！</li>
+<li><strong>健康食品（小綠人標章）</strong>：經衛福部實質科學審查核可，具備法定 13 項特定保健功效（如調節血脂、免疫調節）。</li>
+</ol>
+
+<h3 class="slide-section-title">益生菌選購黃金法則：認「菌株特異性 (Strain Specificity)」</h3>
+<ul class="slide-list">
+<li>就像買狗不能只看「犬科」，益生菌不能只看「乳酸桿菌」！</li>
+<li><strong>菌屬 $\rightarrow$ 菌種 $\rightarrow$ 菌株 (Strain)</strong>：</li>
+<li>*Lacticaseibacillus*（屬） $\rightarrow$ *rhamnosus*（種） $\rightarrow$ <strong>LGG（菌株編號）</strong></li>
+<li>唯有標出專利菌株編號，其定殖黏附能力、抗胃酸性與臨床功效才具備真實性。</li>
+<li><strong>安全底線</strong>：必須通過全基因體定序（WGS），嚴禁攜帶可轉移之抗生素抗藥性質體！</li>
+</ol>
+
+---
+            </div>
+            <div class="speaker-notes-drawer" id="notes-6">
+                <div class="notes-header">🎤 講者口播講稿</div>
+                <div class="notes-content">走進藥妝店，大家常買各種「保健食品」。請記住：法律上沒有保健食品這個詞，沒拿到「小綠人」標章的，法律地位跟一包洋芋片沒兩樣！買益生菌更是如此，千萬別只看「含 A 菌、B 菌」這種籠統學名，真正有臨床效果的是後面的「菌株代碼」，例如 LGG。同一個菌種，有代碼的是經過實驗認證的專利菌，沒有代碼的可能只是發酵槽隨便撈上來的普通菌，連胃酸都通不過！</div>
+            </div>
+        </section>
+        
+        <section class="slide" id="slide-7" data-slide-index="6">
+            <div class="slide-header">
+                <span class="slide-badge">Slide 07 / 12</span>
+                <span class="slide-source-tag">Wiki 出處: <code>wiki/techniques/novel-food-processing-technologies.md</code></span>
+            </div>
+            <div class="slide-title-group">
+                <h2 class="slide-title">物理破壞：超高壓加工（HPP）如何滅菌卻保全 100% 維生素？</h2>
+                <p class="slide-subtitle">6000 個大氣壓下的非熱物理保鮮科學</p>
+            </div>
+            <div class="slide-body">
+                <h3 class="slide-section-title">超高壓加工參數：100 至 600 MPa (1000~6000 大氣壓)</h3>
+<ul class="slide-list">
+<li>相當於把食物沉入馬里亞納海溝（110 MPa）底部好幾倍的極限壓力中！</li>
+</ul>
+
+<h3 class="slide-section-title">微觀物理滅菌機制：</h3>
+<ol class="slide-list">
+<li><strong>帕斯卡原理 (Pascal's Principle)</strong>：液體壓力以音速瞬間、等向均勻傳遞，厚薄皆無死角。</li>
+<li><strong>細胞膜瓦解</strong>：超過 400 MPa 時，細菌雙層磷脂質被壓縮結晶化，膜蛋白構型破壞、菌體內爆死亡。</li>
+<li><strong>共價鍵完好性</strong>：高壓只破壞非共價鍵，<strong>無法打斷高能共價鍵</strong>！</li>
+<li>維生素 C、花青素與小分子香氣分子 <strong>100% 完整保留</strong>，完全沒有高溫產生的「蒸煮味」。</li>
+</ol>
+
+<blockquote>🌟 <strong>商業實戰</strong>：超商冷壓鮮榨蔬果汁、生蠔低溫高壓脫殼（閉殼肌附著蛋白變性，生蠔肉完整脫落且維持刺身生鮮口感）。</blockquote>
+
+---
+            </div>
+            <div class="speaker-notes-drawer" id="notes-7">
+                <div class="notes-header">🎤 講者口播講稿</div>
+                <div class="notes-content">大家都喝過超商的冷壓蔬果汁，為什麼沒加熱煮沸卻能放一個月，而且喝起來像現打？這背後靠的是超高壓加工（HPP）。它把包裝好的果汁放進特製艙體，加壓到 6000 個大氣壓！在這種極限壓力下，細菌的細胞膜直接被擠爆瓦解；但因為壓力打不斷維生素和香氣分子的「共價鍵」，所以維生素 C 和鮮榨口感一點都沒流失。這就是現代非熱加工的物理奇蹟！</div>
+            </div>
+        </section>
+        
+        <section class="slide" id="slide-8" data-slide-index="7">
+            <div class="slide-header">
+                <span class="slide-badge">Slide 08 / 12</span>
+                <span class="slide-source-tag">Wiki 出處: <code>wiki/ingredients/alternative-proteins-and-plant-meat.md</code></span>
+            </div>
+            <div class="slide-title-group">
+                <h2 class="slide-title">質地重構：植物肉仿生學，如何把大豆拉成「肌肉纖維」？</h2>
+                <p class="slide-subtitle">雙螺桿高溫擠壓技術與色香味化學</p>
+            </div>
+            <div class="slide-body">
+                <h3 class="slide-section-title">微觀結構逆轉：球狀蛋白 $\rightarrow$ 平行肌纖維</h3>
+<ul class="slide-list">
+<li>大豆、豌豆天生是捲曲如毛線球的<strong>球狀蛋白質</strong>；動物肉則是長條平行的<strong>肌纖維束</strong>。</li>
+<li><strong>雙螺桿擠壓機 (Extruder)</strong> 施展三部曲：</li>
+<li><strong>高溫高壓融化 (120°C~180°C)</strong>：強烈機械剪切力打散蛋白質，展開分子鏈並暴露巰基 (-SH)。</li>
+<li><strong>冷卻模口定向剪切</strong>：熔融蛋白流經長冷卻模口，在速度差與剪切力下<strong>沿著流動方向被強行拉直排列</strong>。</li>
+<li><strong>雙硫鍵 (-S-S-) 交聯固化</strong>：降溫時重新鎖定，形成肉眼可見的肉纖維撕裂紋理！</li>
+</ol>
+
+<h3 class="slide-section-title">變色與肉香催化化學：</h3>
+<ul class="slide-list">
+<li><strong>甜菜紅色素 (Betanin)</strong>：具熱敏感性，生肉時鮮紅，下鍋加熱超過 <strong>70°C~80°C</strong> 降解褪色，模擬真肉由紅轉灰褐。</li>
+<li><strong>大豆血紅蛋白 (Leghemoglobin)</strong>：釋放鐵離子，強效催化梅納反應，散發真肉般濃郁肉香。</li>
+</ol>
+
+---
+            </div>
+            <div class="speaker-notes-drawer" id="notes-8">
+                <div class="notes-header">🎤 講者口播講稿</div>
+                <div class="notes-content">植物肉吃起來怎麼會有肉的「撕裂感」？大豆原本的蛋白質捲得像顆毛線球，科學家利用高溫擠壓機，像揉麵團一樣把它扯開拉直，再逼它流過極冷的模具。在強烈剪切力下，蛋白質被迫排成一束束平行的纖維，冷卻後就變成了彈牙的仿肉肌束！再加上遇熱會自然褪色的天然甜菜紅，以及催化梅納反應的血紅素，讓植物肉下鍋時能完美重現「生肉鮮紅到熟肉焦香」的奇妙轉變。</div>
+            </div>
+        </section>
+        
+        <section class="slide" id="slide-9" data-slide-index="8">
+            <div class="slide-header">
+                <span class="slide-badge">Slide 09 / 12</span>
+                <span class="slide-source-tag">Wiki 出處: <code>wiki/ingredients/gmo-vs-gene-edited-foods.md</code></span>
+            </div>
+            <div class="slide-title-group">
+                <h2 class="slide-title">分子剪刀：CRISPR 基因編輯如何讓切開的蘋果永不變黑？</h2>
+                <p class="slide-subtitle">基因改造（GMO）vs 基因編輯（CRISPR-Cas9）的科學真相</p>
+            </div>
+            <div class="slide-body">
+                <h3 class="slide-section-title">本質差異：插入外源 DNA vs 自體基因精準修飾</h3>
+<ul class="slide-list">
+<li><strong>傳統基因改造 (GMO)</strong>：把外物種的基因整段貼進去（如抗蟲玉米插入蘇力菌基因）。</li>
+<li><strong>現代基因編輯 (CRISPR-Cas9)</strong>：像分子剪刀，只在自體 DNA 字典中精確修剪，<strong>成品完全不含外源基因</strong>（SDN-1 型）！</li>
+</ol>
+
+<h3 class="slide-section-title">劃時代的三大餐桌案例：</h3>
+<ol class="slide-list">
+<li><strong>北極蘋果 (Arctic Apple) 與防黑蘑菇</strong>：</li>
+<li>敲除自體<strong>多酚氧化酶 (PPO)</strong> 基因，切開接觸空氣數天依然雪白不褐變，大幅減少食物浪費。</li>
+<li><strong>日本 Sicilian Rouge 高 GABA 番茄</strong>：</li>
+<li>敲除自體抑制結構域，使降血壓與舒壓的 <strong>GABA 含量提升 4 至 5 倍</strong>。</li>
+<li><strong>低丙烯醯胺馬鈴薯 (Innate Potato)</strong>：</li>
+<li>敲除天門冬醯胺合成酶基因，高溫油炸時<strong>致癌物丙烯醯胺劇降 70%~90%</strong>！</li>
+</ol>
+
+---
+            </div>
+            <div class="speaker-notes-drawer" id="notes-9">
+                <div class="notes-header">🎤 講者口播講稿</div>
+                <div class="notes-content">平常削完蘋果泡鹽水防黑，但你知道科學家已經發明出切開擺三天都不會發黑的蘋果嗎？這不是基因改造！傳統基改是把外來生物的基因塞進去；而 2020 年獲諾貝爾獎的 CRISPR 基因編輯，像是一把精準的分子剪刀，它只是把蘋果自體掌管發黑的「多酚氧化酶」基因悄悄剪斷敲除，完全不帶任何外來 DNA。這項技術還做出了炸薯條時致癌物減少八成的馬鈴薯，為未來食品安全帶來全新曙光。</div>
+            </div>
+        </section>
+        
+        <section class="slide" id="slide-10" data-slide-index="9">
+            <div class="slide-header">
+                <span class="slide-badge">Slide 10 / 12</span>
+                <span class="slide-source-tag">Wiki 出處: <code>wiki/techniques/food-texture-modification-and-iddsi.md</code></span>
+            </div>
+            <div class="slide-title-group">
+                <h2 class="slide-title">友善質地：高齡防嗆飲食與天然水果酵素「真空嫩肉法」</h2>
+                <p class="slide-subtitle">從 IDDSI 國際質地標準到廚房物理化學實踐</p>
+            </div>
+            <div class="slide-body">
+                <h3 class="slide-section-title">廚房常見誤區：長輩喝水比吃肉更容易嗆咳！</h3>
+<ul class="slide-list">
+<li>稀薄流質流速太快，長者吞嚥反射延遲，會厭軟骨來不及關閉，極易引發<strong>吸入性肺炎</strong>。</li>
+<li>散落肉末無法形成滑順「食團 (Bolus)」，容易卡在喉頭嗆咳。</li>
+</ol>
+
+<h3 class="slide-section-title">IDDSI 國際吞嚥障礙標準與 Eatender 標章</h3>
+<ul class="slide-list">
+<li><strong>Level 3~4（濃稠泥狀）</strong>：舀起不滴落，叉背按壓不起痕。</li>
+<li><strong>Eatender 舌頭壓碎級</strong>：硬度極低，舌頭往上顎輕頂即可化開。</li>
+</ol>
+
+<h3 class="slide-section-title">廚房實作：如何做出「外型完整、入口即化」的肉排？</h3>
+<ol class="slide-list">
+<li><strong>天然蛋白酶真空滲透</strong>：以新鮮<strong>鳳梨汁（鳳梨蛋白酶 Bromelain）</strong>或奇異果泥浸泡肉排。</li>
+<li>蛋白酶專一剪切肌動球蛋白與肌束膜，肉排外觀完整，但筷子一夾即斷、舌頂即碎！</li>
+<li><strong>防離水芡汁配方</strong>：避免單用太白粉（易被唾液澱粉酶分解水化引發嗆咳），改用 <strong>黃原膠 (Xanthan gum)</strong>（0.3%~0.5%）勾芡，維持均勻黏稠防嗆。</li>
+</ol>
+
+---
+            </div>
+            <div class="speaker-notes-drawer" id="notes-10">
+                <div class="notes-header">🎤 講者口播講稿</div>
+                <div class="notes-content">家中有長輩的朋友請特別注意：喝水比吃肉更危險！因為水的流速太快，長輩喉嚨反應不及，水直接滑進氣管就會引發致命的吸入性肺炎。照顧長輩不是把食物打成難看的糊狀，那樣會失去用餐尊嚴。我們可以用新鮮鳳梨汁浸泡肉排，利用天然的鳳梨蛋白酶把粗硬的肌肉纖維剪斷，煎出來的肉排外表完整誘人，但長輩只要用舌頭輕輕一頂就化開！再搭配耐唾液分解的黃原膠勾芡，就能做到美味又有尊嚴的無障礙飲食。</div>
+            </div>
+        </section>
+        
+        <section class="slide" id="slide-11" data-slide-index="10">
+            <div class="slide-header">
+                <span class="slide-badge">Slide 11 / 12</span>
+                <span class="slide-source-tag">Wiki 出處: <code>wiki/ingredients/edible-medicinal-mushrooms-and-umami.md</code></span>
+            </div>
+            <div class="slide-title-group">
+                <h2 class="slide-title">鮮味相乘：廚房裡的分子密碼，乾香菇與昆布的 8 倍鮮味效應</h2>
+                <p class="slide-subtitle">鳥苷酸（5'-GMP）與麩胺酸的 T1R1/T1R3 受體夾鉗機制</p>
+            </div>
+            <div class="slide-body">
+                <h3 class="slide-section-title">乾香菇泡發的化學大忌：切勿用 100°C 滾水！</h3>
+<ul class="slide-list">
+<li>乾香菇在脫水與泡水時，細胞內的<strong>核酸內切酶</strong>會被激活，將 RNA 剪切分解為鮮味核苷酸——<strong>鳥苷酸 (5'-GMP)</strong>。</li>
+<li>若用沸水沖泡，高溫會瞬間破壞酵素活性！</li>
+<li>🔑 <strong>最佳泡發</strong>：<strong>冷水（4°C 冰箱冷藏浸泡）或 50°C 溫水</strong>，鮮味分子釋放最多。</li>
+</ol>
+
+<h3 class="slide-section-title">鮮味相乘效應 (Umami Synergy) 的分子機制</h3>
+<ul class="slide-list">
+<li>舌頭味蕾上的 heterodimer 鮮味受體：<strong>T1R1 + T1R3</strong>。</li>
+<li><strong>單獨麩胺酸（昆布/味精）</strong>：鮮味呈線性微幅上升（基準 1x）。</li>
+<li><strong>麩胺酸 ＋ 鳥苷酸（乾香菇 5'-GMP）</strong>：</li>
+<li>鳥苷酸結合在受體側向位點，促使受體如「夾子」般迅速閉合，將麩胺酸牢牢鎖定！</li>
+<li>解離速度大幅變慢，大腦神經電訊號暴增 <strong>8 至 16 倍</strong>！</li>
+</ol>
+
+---
+            </div>
+            <div class="speaker-notes-drawer" id="notes-11">
+                <div class="notes-header">🎤 講者口播講稿</div>
+                <div class="notes-content">為什麼阿嬤燉香菇雞湯、或者日式高湯用昆布加香菇，喝起來鮮味會直接在舌尖爆開？這在食品化學上稱為「鮮味相乘效應（Umami Synergy）」。舌頭上的鮮味受體像個小夾子，單吃昆布或味精，夾子合得慢；但只要加入乾香菇裡的「鳥苷酸」，受體就會像上鎖一樣緊緊夾住鮮味分子，讓大腦感受到的鮮度瞬間暴增 8 到 16 倍！另外記得：泡乾香菇千萬別用滾燙熱水，改用冷水放在冰箱冷藏慢泡，才能保全產鮮酵素的活性！</div>
+            </div>
+        </section>
+        
+        <section class="slide" id="slide-12" data-slide-index="11">
+            <div class="slide-header">
+                <span class="slide-badge">Slide 12 / 12</span>
+                <span class="slide-source-tag">Wiki 出處: <code>wiki/myths-safety/food-protection-and-safety-paradigm.md</code></span>
+            </div>
+            <div class="slide-title-group">
+                <h2 class="slide-title">自煮守則：現代飲食指南，科學自煮的五大行動清單</h2>
+                <p class="slide-subtitle">融會貫通食品科學，守護全家人的餐桌與健康</p>
+            </div>
+            <div class="slide-body">
+                <h3 class="slide-section-title">1. 溫控零死角（告別危險溫度帶）</h3>
+<ul class="slide-list">
+<li>熟食在 <strong>5°C 至 60°C</strong> 絕不超過 2 小時；生鮮米麵與泡發木耳一律 <strong>< 7°C 冷藏</strong>，杜絕邦克列酸！</li>
+</ul>
+
+<h3 class="slide-section-title">2. 砧板分色、生熟分離</h3>
+<ul class="slide-list">
+<li>準備生肉（紅）、熟食/蔬果（綠）兩套砧板；生雞肉絕不在水龍頭下直接噴濺沖洗。</li>
+</ul>
+
+<h3 class="slide-section-title">3. 看懂標章不踩雷</h3>
+<ul class="slide-list">
+<li>認明「小綠人」特定保健功效字號；買益生菌指名專利「菌株編號」（如 LGG、BB-12）。</li>
+</ul>
+
+<h3 class="slide-section-title">4. 理性看待添加物與潔淨標示</h3>
+<ul class="slide-list">
+<li>拒絕「天然必定好、化學必定毒」的非黑即白；微量合法亞硝酸鹽保命，優於致命肉毒桿菌！</li>
+</ul>
+
+<h3 class="slide-section-title">5. 善用天然物理與酵素工藝</h3>
+<ul class="slide-list">
+<li>善用鳳梨蛋白酶真空軟化肉質、冷水泡菇激發鳥苷酸與昆布 8 倍鮮味相乘，美味兼顧健康！</li>
+</ul>
+
+---
+            </div>
+            <div class="speaker-notes-drawer" id="notes-12">
+                <div class="notes-header">🎤 講者口播講稿</div>
+                <div class="notes-content">最後，讓我們把今天學到的所有科學知識，化為日常廚房的五大行動：第一，嚴守 5 到 60 度的溫控底線，米麵木耳務必低溫冷藏；第二，生熟砧板分開，生肉不要水龍頭沖洗；第三，買保健品認準小綠人與益生菌菌株編號，不做無效消費；第四，理性看待添加物，明白適當防腐是保護生命的科學工具；第五，靈活運用天然酵素與鮮味相乘法則。食品科學不是冷冰冰的化學式，而是讓全家人吃得安心、吃得美味的最好武器！</div>
+            </div>
+        </section>
+        
+    </main>
+
+    <footer id="nav-controls">
+        <button class="btn" id="prev-btn" onclick="prevSlide()">◀ 上一頁 (Left)</button>
+        <span id="progress-counter">1 / 12</span>
+        <button class="btn" id="next-btn" onclick="nextSlide()">下一頁 (Right) ▶</button>
+        <button class="btn" id="toggle-notes-btn" onclick="toggleNotes()">🎤 切換講稿顯示</button>
+        <span class="kb-hint">支援鍵盤方向鍵 ◀ / ▶ 翻頁</span>
+    </footer>
+
+    <script>
+        let currentSlide = 0;
+        const totalSlides = 12;
+        const slides = document.querySelectorAll('.slide');
+        const counter = document.getElementById('progress-counter');
+        let showNotes = true;
+
+        function showSlide(index) {
+            if (index < 0) index = 0;
+            if (index >= totalSlides) index = totalSlides - 1;
+            currentSlide = index;
+
+            slides.forEach((s, i) => {
+                s.classList.toggle('active', i === currentSlide);
+            });
+
+            counter.innerText = `${currentSlide + 1} / ${totalSlides}`;
+        }
+
+        function nextSlide() {
+            if (currentSlide < totalSlides - 1) {
+                showSlide(currentSlide + 1);
+            }
+        }
+
+        function prevSlide() {
+            if (currentSlide > 0) {
+                showSlide(currentSlide - 1);
+            }
+        }
+
+        function toggleNotes() {
+            showNotes = !showNotes;
+            document.querySelectorAll('.speaker-notes-drawer').forEach(el => {
+                el.style.display = showNotes ? 'block' : 'none';
+            });
+        }
+
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowRight' || e.key === ' ' || e.key === 'Enter') {
+                nextSlide();
+            } else if (e.key === 'ArrowLeft') {
+                prevSlide();
+            } else if (e.key.toLowerCase() === 'n') {
+                toggleNotes();
+            }
+        });
+
+        showSlide(0);
+    </script>
+</body>
+</html>
