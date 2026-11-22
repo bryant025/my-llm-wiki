@@ -17,6 +17,10 @@
 
 - [替代性蛋白質與植物肉的科學解析：從大豆蛋白到仿肉肌理結構](wiki/ingredients/alternative-proteins-and-plant-meat.md) (`alternative-proteins-and-plant-meat.md`)
   *解密植物肉如何透過雙螺桿高溫擠壓技術將球狀植物蛋白重構成平行肌束纖維，剖析甜菜紅與血紅素的變色風味魔術與家庭料理煎烤秘訣。*
+- [基因改造 vs 基因編輯食品：從 CRISPR 分子剪刀到抗褐變蘋果與高 GABA 番茄](wiki/ingredients/gmo-vs-gene-edited-foods.md) (`gmo-vs-gene-edited-foods.md`)
+  *拆解基因轉殖（GMO）與 CRISPR-Cas9 分子剪刀的技術差異，介紹抗褐變北極蘋果、高 GABA 番茄與低丙烯醯胺馬鈴薯的科學機制與各國法規爭議。*
+- [機能性食品成分與生化機制：魚油、紅麴、降壓胜肽與微膠囊包埋技術](wiki/ingredients/functional-food-ingredients.md) (`functional-food-ingredients.md`)
+  *深度剖析魚油 EPA/DHA、紅麴 Monacolin K 與芝麻降壓胜肽的底層生化調節機轉，解析橘黴素與過氧化食安風險，並介紹保護機能成分的微膠囊包埋工藝。*
 
 ---
 
